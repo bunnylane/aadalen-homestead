@@ -10,6 +10,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import storeItems from "./../data/items.json";
 import { formatCurrency } from '../utilities/formatCurrency';
 import DeleteIcon from '@mui/icons-material/Delete';
+import ItemButton from './ItemButton';
 
 
 export default function ResponsiveAppBar() {
@@ -41,10 +42,9 @@ function NavigationRoutes() {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 
     const pages = [
-        { endpoint: 'store', display: 'Butikk'},
-        { endpoint: 'blog', display: 'Blogg'},
-        { endpoint: 'about', display: 'Om Oss'},
-
+        { endpoint: 'store', display: 'Butikk' },
+        { endpoint: 'blog', display: 'Blogg' },
+        { endpoint: 'about', display: 'Om Oss' },
     ];
 
     return (
@@ -97,7 +97,6 @@ function NavigationRoutes() {
         </>);
 }
 
-
 function Logo() {
     return (
         <Grid container justifyContent="center" alignItems="center">
@@ -105,18 +104,13 @@ function Logo() {
                 <Box paddingLeft={2} justifyContent="space-evenly" component="img" height={30} sx={{ transform: "scaleX(-1)}", display: { xs: 'flex' }, mr: 1 }} src="/assets/bee.svg" />
             </Grid>
             <Grid item xs="auto">
-                <Typography
-                    variant="h5"
-                    noWrap
-                    component="a"
-                    href="/"
-                    sx={{
-                        display: { xs: 'none', md: 'flex' },
-                        fontWeight: 400,
-                        letterSpacing: '.1rem',
-                        color: 'inherit',
-                        textDecoration: 'none',
-                    }}
+                <Typography variant="h5" component="a" href="/" sx={{
+                    display: { md: 'flex' },
+                    fontWeight: 400,
+                    letterSpacing: '.1rem',
+                    color: 'inherit',
+                    textDecoration: 'none',
+                }}
                 >Ådalen</Typography>
             </Grid>
         </Grid>
@@ -134,7 +128,7 @@ function ShoppingCart() {
 
     function ListCart() {
         return <Box role='presentation'>
-            <List sx={{ width: 300 }}>
+            <List sx={{ width: 400 }}>
                 {getTotalItems() === 0 ?
                     <Box justifyContent="space-between">
                         <ListItem >
@@ -148,13 +142,13 @@ function ShoppingCart() {
                             <Grid item xs={4}>
                                 <Box component="img" sx=
                                     {{
-                                        height: 100,
-                                        width: 100,
+                                        height: 120,
+                                        width: 120,
                                         maxHeight: { xs: 233, md: 167 },
                                         maxWidth: { xs: 350, md: 250 },
                                         objectFit: "contain"
                                     }}
-                                    alt="The house from the offer."
+                                    alt="store item"
                                     src={GetItem(item.id)?.imgUrl}
                                 />
                             </Grid>
@@ -164,15 +158,12 @@ function ShoppingCart() {
                                         <ListItemText primary={GetItem(item.id)?.title} />
                                     </Grid>
                                     <Grid item>
-                                        <ListItemText primary={formatCurrency((GetItem(item.id)?.price || 0) * getItemQuantity(item.id))} />
+                                        <ListItemText secondary={formatCurrency((GetItem(item.id)?.price || 0) * getItemQuantity(item.id))} />
                                     </Grid>
                                     <Grid item>
                                         <Grid container justifyContent="space-between">
                                             <Grid item>
-                                                <ListItemText primary={"Quantity " + getItemQuantity(item.id).toString()} />
-                                            </Grid>
-                                            <Grid item>
-                                                <Button size='small' onClick={() => removeFromCart(item.id)}><DeleteIcon /></Button>
+                                                <ItemButton id={item.id} numItems={getItemQuantity(item.id)} price={formatCurrency((GetItem(item.id)?.price || 0))} />
                                             </Grid>
                                         </Grid>
                                     </Grid >
@@ -185,14 +176,10 @@ function ShoppingCart() {
             <Divider />
             {getTotalItems() > 0 ?
                 <Box padding={2}>
-                    <Typography>
+                    <Typography paddingBottom={2}>
                         {formatCurrency(getItems().reduce((price, item) => price + (GetItem(item?.id)?.price || 0) * getItemQuantity(item?.id), 0))}
                     </Typography>
-                    <Link href="checkout">
-                        <Button fullWidth variant='contained'>
-                            <Typography>Checkout</Typography>
-                        </Button>
-                    </Link>
+                    <Button size='large' fullWidth variant='contained' href="/checkout">Gå til kassen</Button>
                 </Box>
                 : null}
         </Box>
@@ -237,7 +224,7 @@ function SignIn() {
                 <Box sx={{ flexGrow: 0 }}>
                     <Tooltip title="Open settings">
                         <Button size='large' onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                            <PersonIcon sx={{ color:"secondary.main" }} />
+                            <PersonIcon sx={{ color: "secondary.main" }} />
                         </Button>
                     </Tooltip>
                     <Menu
