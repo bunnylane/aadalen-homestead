@@ -7,7 +7,7 @@ on:
       - '.github/workflows/**'
 
 env:
-  NODE_VERSION: latest
+  NODE_VERSION: 14.18.1
   APP: aadalen-frontend
   APP_NAME: webappaadalen001lab
 
@@ -22,7 +22,7 @@ jobs:
     - name: Install Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: 'latest'
+        node-version: '${{ env.NODE_VERSION }}'
 
     - name: Cache Dependencies
       uses: actions/cache@v2
