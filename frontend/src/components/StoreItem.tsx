@@ -1,4 +1,4 @@
-import { Button, Card, CardActions, CardMedia, Grid, makeStyles, Modal, Typography } from "@mui/material"
+import { alpha, Card, CardActions, CardMedia, Grid, Modal, Typography } from "@mui/material"
 import { Box } from "@mui/system"
 import { formatCurrency } from "../utilities/formatCurrency"
 
@@ -59,14 +59,14 @@ export default function StoreItem({ id, title, numItems, description, price, img
             </Box>
             <Box>
                 <Grid container>
-                    <Grid xs={5}>
+                    <Grid xs={4}>
                         <Typography variant="caption" padding={2} color="text.secondary">{priceFormatted}</Typography>
                     </Grid>
-                    <Grid xs={7} textAlign="right">
-                        <Typography align="justify" color="text.secondary" style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', }} variant="caption" paddingX={2}>
-                            {numItems === 0 ? <CircleIcon fontSize="small" style={{ color: "red", paddingRight: 1 }} /> : null}
-                            {numItems > 0 && numItems < 50 ? <CircleIcon fontSize="small" style={{ color: "yellow", paddingRight: 2 }} /> : null}
-                            {numItems >= 50 ? <CircleIcon fontSize="small" style={{ color: "green", paddingRight: 1 }} /> : null}
+                    <Grid xs={8}>
+                        <Typography justifyContent="right" color="text.secondary" style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', }} variant="caption" paddingX={2}>
+                            {numItems === 0 ? <CircleIcon fontSize="small" style={{ color: alpha("#FF0000", .5), paddingRight: 1 }} /> : null}
+                            {numItems > 0 && numItems < 50 ? <CircleIcon fontSize="small" color="warning" style={{color: alpha("#CCCC00", .5), paddingRight: 2 }} /> : null}
+                            {numItems >= 50 ? <CircleIcon fontSize="small" style={{ color: alpha("#006400", .5), paddingRight: 1 }} /> : null}
                             {numItems >= 50 ? "50+ stk." : numItems.toString() + " stk."}
                         </Typography>
                     </Grid>
