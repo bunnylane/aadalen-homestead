@@ -56,7 +56,7 @@ jobs:
       - name: Build and cache image
         uses: docker/build-push-action@v3
         with:
-          context: ./${{ env.APP }}
+          context: ./frontend
           # push: ${{ github.ref_name == 'main' }}
           push: true
           tags: '${{ env.DOCKERTAG }}'
