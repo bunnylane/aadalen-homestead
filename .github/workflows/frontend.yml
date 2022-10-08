@@ -57,15 +57,14 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: ./frontend
-          # push: ${{ github.ref_name == 'main' }}
-          push: true
+          push: ${{ github.ref_name == 'main' }}
           tags: '${{ env.DOCKERTAG }}'
   
   publish-container:
     name: 'CD / App Service'
     needs: container-build
     runs-on: ubuntu-latest
-    # if: ${{ github.ref_name == 'main' }}
+    if: ${{ github.ref_name == 'main' }}
     steps:
     - name: Set docker tag
       run: |
