@@ -34,7 +34,7 @@ jobs:
       run: yarn --cwd=./frontend
 
     - name: Run Unit Tests
-      run: yarn test --cwd=./frontend
+      run: yarn --cwd=./frontend test
   
   container-build:
     name: 'CI / Docker'
