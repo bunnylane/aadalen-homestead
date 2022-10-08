@@ -32,9 +32,6 @@ jobs:
 
     - name: Install Dependencies
       run: yarn --cwd=./frontend
-
-    - name: Run Unit Tests
-      run: yarn --cwd=./frontend test
   
   container-build:
     name: 'CI / Docker'
