@@ -1,0 +1,36 @@
+{
+    "version": "0.2.0",
+        "compounds": [
+        {
+            "name": "Solution",
+            "configurations": ["Backend", "Frontend", "Chrome"]
+        }
+    ],
+    "configurations": [
+        {
+            "name": "Backend",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}/backend/main.go"
+        },
+        {
+            "name": "Frontend",
+            "type": "node",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/frontend",
+            "runtimeExecutable": "yarn",
+            "args": [
+                "start"
+            ]
+        },
+        {
+            "name": "Chrome",
+            "request": "launch",
+            "type": "chrome",
+            "cwd": "${workspaceFolder}/frontend",
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceFolder}/frontend"
+        }
+    ]
+}

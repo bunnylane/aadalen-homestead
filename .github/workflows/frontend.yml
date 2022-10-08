@@ -1,0 +1,81 @@
+name: Frontend CI/CD
+
+on:
+  push:
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/**'
+
+env:
+  NODE_VERSION: 14.18.1
+  APP: aadalen-frontend
+  APP_NAME: webappaadalen001lab
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    name: 'CI / Tests'
+    steps:
+    - uses: actions/checkout@v3
+      name: 'Checkout Repository'
+
+    - name: Install Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '${{ env.NODE_VERSION }}'
+
+    - name: Cache Dependencies
+      uses: actions/cache@v2
+      with:
+        path: '**/node_modules'
+        key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+
+    - name: Install Dependencies
+      run: yarn --cwd=./frontend
+  
+  container-build:
+    name: 'CI / Docker'
+    runs-on: ubuntu-latest
+    needs: tests
+    permissions:
+      contents: "read"
+      id-token: "write"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Set docker tag
+        run: |
+          export DOCKERTAG="${{ secrets.ACR_ENDPOINT }}/$APP:$GITHUB_SHA"
+          echo "DOCKERTAG=${DOCKERTAG}" >> $GITHUB_ENV
+      - name: Log into registry
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ secrets.ACR_ENDPOINT }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+      - name: Build and cache image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./frontend
+          push: ${{ github.ref_name == 'main' }}
+          tags: '${{ env.DOCKERTAG }}'
+  
+  publish-container:
+    name: 'CD / App Service'
+    needs: container-build
+    runs-on: ubuntu-latest
+    if: ${{ github.ref_name == 'main' }}
+    steps:
+    - name: Set docker tag
+      run: |
+        export DOCKERTAG="${{ secrets.ACR_ENDPOINT }}/$APP:$GITHUB_SHA"
+        echo "DOCKERTAG=${DOCKERTAG}" >> $GITHUB_ENV
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    - uses: azure/webapps-deploy@v2
+      name: 'Deploy Container'
+      with:
+        app-name: '${{ env.APP_NAME }}'
+        images: '${{ env.DOCKERTAG }}'
