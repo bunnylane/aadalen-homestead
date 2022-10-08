@@ -1,0 +1,25 @@
+{
+    "files.exclude": {
+        "frontend/node_modules": true,
+        "frontend/.pnp": true,
+        "frontend/**/.pnp.js": true,
+        "frontend/coverage": true,
+        "frontend/build": true,
+        "frontend/**/.DS_Store": true,
+        "frontend/**/.env.local": true,
+        "frontend/**/.env.development.local": true,
+        "frontend/**/.env.test.local": true,
+        "frontend/**/.env.production.local": true,
+        "frontend/**/npm-debug.log*": true,
+        "frontend/**/yarn-debug.log*": true,
+        "frontend/**/yarn-error.log*": true,
+        "backend/**/*.exe": true,
+        "backend/**/*.exe~": true,
+        "backend/**/*.dll": true,
+        "backend/**/*.so": true,
+        "backend/**/*.dylib": true,
+        "backend/**/*.test": true,
+        "backend/**/*.out": true,
+        "backend/**/__debug_bin": true
+    }
+}

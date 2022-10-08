@@ -1,4 +1,6 @@
+import { Typography } from "@mui/material";
 
 export default function Blog() {
-    return <h1>Blog</h1>
+    return <Typography variant="h3">
+    </Typography>
 }
