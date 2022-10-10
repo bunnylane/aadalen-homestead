@@ -43,16 +43,16 @@ export default function StoreItem({ id, title, numItems, longDescription, descri
             boxShadow: 10,
             border: hover === false ? "solid 2px transparent" : "solid 2px",
             borderColor: hover === false ? "white" : "#92a5a6",
-            boxSizing: "border-box"
+            boxSizing: "border-box",
+            cursor: "pointer"
         }} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
             <ItemModal open={open} item={{ id, title, longDescription, numItems, description, price, imgUrl }} handleClose={() => handleClose} />
-            <Box onClick={handleOpen} sx={{ cursor: "pointer" }}>
+            <Box onClick={handleOpen}>
                 <CardMedia
                     component="img"
                     style={{ objectFit: "contain" }}
                     height="150"
                     image={imgUrl}
-                    sx={{ cursor: "pointer" }}
                 />
 
                 <Box paddingX={2} height={60}>
@@ -78,7 +78,7 @@ export default function StoreItem({ id, title, numItems, longDescription, descri
                 </Box>
             </Box>
 
-            <CardActions sx={{ zIndex: 200 }}>
+            <CardActions sx={{zIndex: 200}}>
                 <ItemButton id={id} numItems={numItems} price={priceFormatted} />
             </CardActions>
         </Card>
@@ -122,15 +122,19 @@ function ItemModal({ item, open, handleClose }: { item: StoreItemProps, open: bo
                     image={item.imgUrl}
                     sx={{ cursor: "pointer" }}
                 />
-                <Typography id="modal-modal-title" variant="h6" component="h2">
+                <Typography paddingX={1} id="modal-modal-title" variant="h6" component="h2">
                     {item.title}
+                </Typography>
+                <Typography paddingX={1} id="modal-modal-description">
+                    {item.description}
                 </Typography>
                 <Box sx={{ '& > legend': { mt: 2 } }}
                 >
-                    <Typography component="legend">Vurdering</Typography>
+                    <Typography paddingX={1} component="legend">Vurdering</Typography>
                     <StyledRating
                         name="Vurdering"
                         defaultValue={2}
+                        sx={{ paddingX: 1}}
                         getLabelText={(value: number) => `${value} Heart${value !== 1 ? 's' : ''}`}
                         precision={0.5}
                         icon={<FavoriteIcon fontSize="inherit" />}
@@ -138,12 +142,11 @@ function ItemModal({ item, open, handleClose }: { item: StoreItemProps, open: bo
                     />
                 </Box>
                 <SimpleAccordion description={item.longDescription} />
-                <Box>
+                <Box paddingTop={3} paddingX={1}>
                     <Typography variant="caption">
                         Produsert av Ådalen Småbruk
                     </Typography>
                 </Box>
-
             </Card>
         </Box>
 
@@ -160,7 +163,7 @@ function SimpleAccordion({ description }: { description: string }) {
                     aria-controls="panel1a-content"
                     id="panel1a-header"
                 >
-                    <Typography>Beskrivelse</Typography>
+                    <Typography sx={{ fontWeight: 600 }} >Beskrivelse</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
@@ -174,7 +177,7 @@ function SimpleAccordion({ description }: { description: string }) {
                     aria-controls="panel2a-content"
                     id="panel2a-header"
                 >
-                    <Typography>Tilbakemeldinger</Typography>
+                    <Typography sx={{ fontWeight: 600 }}>Tilbakemeldinger</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography>
@@ -185,8 +188,14 @@ function SimpleAccordion({ description }: { description: string }) {
             </Accordion>
             <Accordion>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel3a-content" id="panel3a-header" >
-                    <Typography>Næringsinnhold</Typography>
+                    <Typography sx={{ fontWeight: 600 }}>Næringsinnhold</Typography>
                 </AccordionSummary>
+                <AccordionDetails>
+                    <Typography>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+                        malesuada lacus ex, sit amet blandit leo lobortis eget.
+                    </Typography>
+                </AccordionDetails>
             </Accordion>
         </div>
     );
