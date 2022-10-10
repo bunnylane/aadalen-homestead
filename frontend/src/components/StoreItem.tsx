@@ -8,7 +8,6 @@ import CircleIcon from '@mui/icons-material/Circle';
 import { useState } from "react";
 import ItemButton from "./ItemButton";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { isPartiallyEmittedExpression } from "typescript";
 
 
 type StoreItemProps = {
@@ -47,38 +46,39 @@ export default function StoreItem({ id, title, numItems, longDescription, descri
             boxSizing: "border-box"
         }} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
             <ItemModal open={open} item={{ id, title, longDescription, numItems, description, price, imgUrl }} handleClose={() => handleClose} />
-            <CardMedia
-                component="img"
-                style={{ objectFit: "contain" }}
-                height="150"
-                image={imgUrl}
-                onClick={handleOpen}
-                sx={{ cursor: "pointer" }}
-            />
+            <Box onClick={handleOpen} sx={{ cursor: "pointer" }}>
+                <CardMedia
+                    component="img"
+                    style={{ objectFit: "contain" }}
+                    height="150"
+                    image={imgUrl}
+                    sx={{ cursor: "pointer" }}
+                />
 
-            <Box paddingX={2} height={60}>
-                <Typography id="description" variant="subtitle1">{title}</Typography>
-            </Box>
-            <Box paddingX={2} height={50}>
-                <Typography id="description" variant="caption">{description}</Typography>
-            </Box>
-            <Box>
-                <Grid container>
-                    <Grid xs={4}>
-                        <Typography variant="caption" padding={2} color="text.secondary">{priceFormatted}</Typography>
+                <Box paddingX={2} height={60}>
+                    <Typography id="description" variant="subtitle1">{title}</Typography>
+                </Box>
+                <Box paddingX={2} height={50}>
+                    <Typography id="description" variant="caption">{description}</Typography>
+                </Box>
+                <Box>
+                    <Grid container>
+                        <Grid xs={4}>
+                            <Typography variant="caption" padding={2} color="text.secondary">{priceFormatted}</Typography>
+                        </Grid>
+                        <Grid xs={8}>
+                            <Typography justifyContent="right" color="text.secondary" style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', }} variant="caption" paddingX={2}>
+                                {numItems === 0 ? <CircleIcon fontSize="small" style={{ color: alpha("#FF0000", .5), paddingRight: 1 }} /> : null}
+                                {numItems > 0 && numItems < 50 ? <CircleIcon fontSize="small" color="warning" style={{ color: alpha("#CCCC00", .5), paddingRight: 2 }} /> : null}
+                                {numItems >= 50 ? <CircleIcon fontSize="small" style={{ color: alpha("#006400", .5), paddingRight: 1 }} /> : null}
+                                {numItems >= 50 ? "50+ stk." : numItems.toString() + " stk."}
+                            </Typography>
+                        </Grid>
                     </Grid>
-                    <Grid xs={8}>
-                        <Typography justifyContent="right" color="text.secondary" style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', }} variant="caption" paddingX={2}>
-                            {numItems === 0 ? <CircleIcon fontSize="small" style={{ color: alpha("#FF0000", .5), paddingRight: 1 }} /> : null}
-                            {numItems > 0 && numItems < 50 ? <CircleIcon fontSize="small" color="warning" style={{ color: alpha("#CCCC00", .5), paddingRight: 2 }} /> : null}
-                            {numItems >= 50 ? <CircleIcon fontSize="small" style={{ color: alpha("#006400", .5), paddingRight: 1 }} /> : null}
-                            {numItems >= 50 ? "50+ stk." : numItems.toString() + " stk."}
-                        </Typography>
-                    </Grid>
-                </Grid>
+                </Box>
             </Box>
 
-            <CardActions>
+            <CardActions sx={{ zIndex: 200 }}>
                 <ItemButton id={id} numItems={numItems} price={priceFormatted} />
             </CardActions>
         </Card>
@@ -185,7 +185,7 @@ function SimpleAccordion({ description }: { description: string }) {
             </Accordion>
             <Accordion>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel3a-content" id="panel3a-header" >
-                <Typography>Næringsinnhold</Typography>
+                    <Typography>Næringsinnhold</Typography>
                 </AccordionSummary>
             </Accordion>
         </div>
