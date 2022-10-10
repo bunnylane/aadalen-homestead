@@ -58,8 +58,8 @@ const Pages = () => {
     <Box>
       <NavBar />
       <Grid container direction="row-reverse" justifyContent="space-between" alignItems="flex-start">
-        <Grid item xs={3} />
-        <Grid item xs={6} >
+        <Grid item xs={2} />
+        <Grid item xs={8} >
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path='/blog' element={<Blog />} />
@@ -68,7 +68,7 @@ const Pages = () => {
             <Route path='/orders' element={<Orders />} />
           </Routes>
         </Grid>
-        <Grid item xs={3}/>
+        <Grid item xs={2}/>
       </Grid>
       <Footer />
       </Box>

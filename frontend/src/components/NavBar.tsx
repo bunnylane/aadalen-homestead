@@ -203,9 +203,9 @@ function SignIn() {
 
 
     const settings = [
-        { name: 'Edit Profile', action: () => instance.loginRedirect(b2cPolicies.authorities.editProfile) },
-        { name: 'Orders', action: () => window.location.href = "/orders" },
-        { name: 'Sign Out', action: () => instance.logoutRedirect({ postLogoutRedirectUri: "/" }) }
+        { name: 'Endre Profil', action: () => instance.loginRedirect(b2cPolicies.authorities.editProfile) },
+        { name: 'Ordre', action: () => window.location.href = "/orders" },
+        { name: 'Logg ut', action: () => instance.logoutRedirect({ postLogoutRedirectUri: "/" }) }
     ];
 
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);

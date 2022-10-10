@@ -33,10 +33,11 @@ export default function StoreItem({ id, title, numItems, description, price, img
 
     const handleClose = () => setOpen(false);
 
-    return <Box>
+    return <Box display="flex" justifyContent="center">
         <Card sx={{
-            boxShadow: 10,
             maxWidth: 300,
+            width: "100%",
+            boxShadow: 10,
             border: hover === false ? "solid 2px transparent" : "solid 2px",
             borderColor: hover === false ? "white" : "#92a5a6",
             boxSizing: "border-box"
@@ -45,7 +46,7 @@ export default function StoreItem({ id, title, numItems, description, price, img
             <CardMedia
                 component="img"
                 style={{ objectFit: "contain" }}
-                height="250"
+                height="150"
                 image={imgUrl}
                 onClick={handleOpen}
                 sx={{ cursor: "pointer" }}
