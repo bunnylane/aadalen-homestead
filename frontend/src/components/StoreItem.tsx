@@ -1,11 +1,15 @@
-import { alpha, Card, CardActions, CardMedia, Grid, Modal, Typography } from "@mui/material"
+import { Accordion, AccordionDetails, AccordionSummary, alpha, Card, CardActions, CardMedia, Grid, Modal, Rating, styled, Typography } from "@mui/material"
 import { Box } from "@mui/system"
 import { formatCurrency } from "../utilities/formatCurrency"
-
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useShoppingCart } from "../contexts/ShoppingCart";
 import CircleIcon from '@mui/icons-material/Circle';
 import { useState } from "react";
 import ItemButton from "./ItemButton";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { isPartiallyEmittedExpression } from "typescript";
+
 
 type StoreItemProps = {
     id: number
@@ -14,11 +18,11 @@ type StoreItemProps = {
     imgUrl: string
     numItems: number
     description: string
+    longDescription: string
 }
 
 
-
-export default function StoreItem({ id, title, numItems, description, price, imgUrl }: StoreItemProps) {
+export default function StoreItem({ id, title, numItems, longDescription, description, price, imgUrl }: StoreItemProps) {
     const { getItemQuantity } = useShoppingCart()
 
     const quantity = getItemQuantity(id)
@@ -42,7 +46,7 @@ export default function StoreItem({ id, title, numItems, description, price, img
             borderColor: hover === false ? "white" : "#92a5a6",
             boxSizing: "border-box"
         }} onMouseOver={() => setHover(true)} onMouseOut={() => setHover(false)}>
-            <ItemModal open={open} imgUrl={imgUrl} handleClose={() => handleClose} />
+            <ItemModal open={open} item={{ id, title, longDescription, numItems, description, price, imgUrl }} handleClose={() => handleClose} />
             <CardMedia
                 component="img"
                 style={{ objectFit: "contain" }}
@@ -66,7 +70,7 @@ export default function StoreItem({ id, title, numItems, description, price, img
                     <Grid xs={8}>
                         <Typography justifyContent="right" color="text.secondary" style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', }} variant="caption" paddingX={2}>
                             {numItems === 0 ? <CircleIcon fontSize="small" style={{ color: alpha("#FF0000", .5), paddingRight: 1 }} /> : null}
-                            {numItems > 0 && numItems < 50 ? <CircleIcon fontSize="small" color="warning" style={{color: alpha("#CCCC00", .5), paddingRight: 2 }} /> : null}
+                            {numItems > 0 && numItems < 50 ? <CircleIcon fontSize="small" color="warning" style={{ color: alpha("#CCCC00", .5), paddingRight: 2 }} /> : null}
                             {numItems >= 50 ? <CircleIcon fontSize="small" style={{ color: alpha("#006400", .5), paddingRight: 1 }} /> : null}
                             {numItems >= 50 ? "50+ stk." : numItems.toString() + " stk."}
                         </Typography>
@@ -81,35 +85,109 @@ export default function StoreItem({ id, title, numItems, description, price, img
     </Box>
 }
 
-function ItemModal({ open, imgUrl, handleClose }: { open: boolean, imgUrl: string, handleClose: Function }) {
+function ItemModal({ item, open, handleClose }: { item: StoreItemProps, open: boolean, handleClose: Function }) {
+    const StyledRating = styled(Rating)({
+        '& .MuiRating-iconFilled': {
+            color: '#ff6d75',
+        },
+        '& .MuiRating-iconHover': {
+            color: '#ff3d47',
+        },
+    });
+
     return <Modal
         open={open}
         onClose={handleClose()}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
     >
-
-        <Box sx=
+        <Box borderRadius={2} sx=
             {{
                 position: 'absolute' as 'absolute',
                 top: '50%',
                 left: '50%',
+                maxHeight: "80%",
                 transform: 'translate(-50%, -50%)',
-                width: 400,
+                width: '30%',
                 bgcolor: 'white',
-                border: '2px solid',
+                border: '4px solid black',
                 boxShadow: 24,
-                p: 4,
+                overflow: "auto"
             }}>
+            <Card>
+                <CardMedia
+                    component="img"
+                    style={{ objectFit: "contain" }}
+                    height="30%"
+                    image={item.imgUrl}
+                    sx={{ cursor: "pointer" }}
+                />
+                <Typography id="modal-modal-title" variant="h6" component="h2">
+                    {item.title}
+                </Typography>
+                <Box sx={{ '& > legend': { mt: 2 } }}
+                >
+                    <Typography component="legend">Vurdering</Typography>
+                    <StyledRating
+                        name="Vurdering"
+                        defaultValue={2}
+                        getLabelText={(value: number) => `${value} Heart${value !== 1 ? 's' : ''}`}
+                        precision={0.5}
+                        icon={<FavoriteIcon fontSize="inherit" />}
+                        emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+                    />
+                </Box>
+                <SimpleAccordion description={item.longDescription} />
+                <Box>
+                    <Typography variant="caption">
+                        Produsert av Ådalen Småbruk
+                    </Typography>
+                </Box>
 
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-                Text in a modal
-            </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </Typography>
+            </Card>
         </Box>
 
 
     </Modal>;
+}
+
+function SimpleAccordion({ description }: { description: string }) {
+    return (
+        <div>
+            <Accordion>
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                >
+                    <Typography>Beskrivelse</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <Typography>
+                        {description}
+                    </Typography>
+                </AccordionDetails>
+            </Accordion>
+            <Accordion>
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel2a-content"
+                    id="panel2a-header"
+                >
+                    <Typography>Tilbakemeldinger</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <Typography>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+                        malesuada lacus ex, sit amet blandit leo lobortis eget.
+                    </Typography>
+                </AccordionDetails>
+            </Accordion>
+            <Accordion>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel3a-content" id="panel3a-header" >
+                <Typography>Næringsinnhold</Typography>
+                </AccordionSummary>
+            </Accordion>
+        </div>
+    );
 }

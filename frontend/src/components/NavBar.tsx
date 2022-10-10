@@ -19,10 +19,24 @@ export default function ResponsiveAppBar() {
             <AppBar position="sticky">
                 <Container maxWidth="xl">
                     <Toolbar>
-                        <NavigationRoutes />
-                        <Logo />
-                        <ShoppingCart />
-                        <SignIn />
+                        <Grid container justifyContent="center" alignItems="center">
+                            <Grid item xs={4}>
+                                <NavigationRoutes />
+                            </Grid>
+                            <Grid item xs={4}>
+                                <Logo/>
+                            </Grid>
+                            <Grid item xs={4} >
+                                <Grid container alignItems="center">
+                                    <Grid item display="flex" justifyContent="right" xs={6}>
+                                        <ShoppingCart />
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <SignIn />
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </Grid>
                     </Toolbar>
                 </Container>
             </AppBar>
