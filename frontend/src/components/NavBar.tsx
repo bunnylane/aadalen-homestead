@@ -19,10 +19,24 @@ export default function ResponsiveAppBar() {
             <AppBar position="sticky">
                 <Container maxWidth="xl">
                     <Toolbar>
-                        <NavigationRoutes />
-                        <Logo />
-                        <ShoppingCart />
-                        <SignIn />
+                        <Grid container justifyContent="center" alignItems="center">
+                            <Grid item xs={4}>
+                                <NavigationRoutes />
+                            </Grid>
+                            <Grid item xs={4}>
+                                <Logo/>
+                            </Grid>
+                            <Grid item xs={4} >
+                                <Grid container alignItems="center">
+                                    <Grid item display="flex" justifyContent="right" xs={6}>
+                                        <ShoppingCart />
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <SignIn />
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </Grid>
                     </Toolbar>
                 </Container>
             </AppBar>
@@ -203,9 +217,9 @@ function SignIn() {
 
 
     const settings = [
-        { name: 'Edit Profile', action: () => instance.loginRedirect(b2cPolicies.authorities.editProfile) },
-        { name: 'Orders', action: () => window.location.href = "/orders" },
-        { name: 'Sign Out', action: () => instance.logoutRedirect({ postLogoutRedirectUri: "/" }) }
+        { name: 'Endre Profil', action: () => instance.loginRedirect(b2cPolicies.authorities.editProfile) },
+        { name: 'Ordre', action: () => window.location.href = "/orders" },
+        { name: 'Logg ut', action: () => instance.logoutRedirect({ postLogoutRedirectUri: "/" }) }
     ];
 
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
