@@ -78,7 +78,7 @@ export default function StoreItem({ id, title, numItems, longDescription, descri
                 </Box>
             </Box>
 
-            <CardActions sx={{zIndex: 200}}>
+            <CardActions sx={{ zIndex: 200 }}>
                 <ItemButton id={id} numItems={numItems} price={priceFormatted} />
             </CardActions>
         </Card>
@@ -134,7 +134,7 @@ function ItemModal({ item, open, handleClose }: { item: StoreItemProps, open: bo
                     <StyledRating
                         name="Vurdering"
                         defaultValue={2}
-                        sx={{ paddingX: 1}}
+                        sx={{ paddingX: 1 }}
                         getLabelText={(value: number) => `${value} Heart${value !== 1 ? 's' : ''}`}
                         precision={0.5}
                         icon={<FavoriteIcon fontSize="inherit" />}
@@ -149,8 +149,6 @@ function ItemModal({ item, open, handleClose }: { item: StoreItemProps, open: bo
                 </Box>
             </Card>
         </Box>
-
-
     </Modal>;
 }
 

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { AppBar, Avatar, Box, Button, Container, Divider, Drawer, Grid, IconButton, ImageListItemBar, Link, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, Toolbar, Tooltip, Typography } from '@mui/material';
+import { AppBar, Box, Button, Container, Divider, Drawer, Grid, IconButton, Link, List, ListItem, ListItemText, Menu, MenuItem, Toolbar, Tooltip, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import AdbIcon from '@mui/icons-material/Adb';
 import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from '@azure/msal-react';
 import { b2cPolicies, loginRequest } from '../authentication/authConfig';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
@@ -9,7 +8,6 @@ import { useShoppingCart } from '../contexts/ShoppingCart';
 import PersonIcon from '@mui/icons-material/Person';
 import storeItems from "./../data/items.json";
 import { formatCurrency } from '../utilities/formatCurrency';
-import DeleteIcon from '@mui/icons-material/Delete';
 import ItemButton from './ItemButton';
 
 
@@ -93,7 +91,7 @@ function NavigationRoutes() {
                     }}
                 >
                     {pages.map((page) => (
-                        <Link key={"collapse" + page} href={page.endpoint}>
+                        <Link key={"collapse" + page} sx={{ textDecoration: "none"}} href={page.endpoint}>
                             <MenuItem onClick={handleCloseNavMenu}>
                                 <Typography textAlign="center">{page.display}</Typography>
                             </MenuItem>
@@ -103,7 +101,7 @@ function NavigationRoutes() {
             </Box>
             <Box sx={{ flexGrow: 1, whiteSpace: "nowrap", display: { xs: 'none', md: 'flex' } }}>
                 {pages.map((page) => (
-                    <Button href={page.endpoint} size='large' onClick={handleCloseNavMenu} sx={{ my: 2, color: "secondary.main", display: 'block' }} >
+                    <Button href={page.endpoint} size='large' onClick={handleCloseNavMenu} sx={{ my: 2, color: "#fafafa", display: 'block' }} >
                         {page.display}
                     </Button>
                 ))}
@@ -115,7 +113,9 @@ function Logo() {
     return (
         <Grid container justifyContent="center" alignItems="center">
             <Grid item xs="auto">
-                <Box paddingLeft={2} justifyContent="space-evenly" component="img" height={30} sx={{ transform: "scaleX(-1)}", display: { xs: 'flex' }, mr: 1 }} src="/assets/bee.svg" />
+                <Box component="a" href="/">
+                    <Box paddingLeft={2} justifyContent="space-evenly" component="img" height={30} sx={{ transform: "scaleX(-1)}", display: { xs: 'flex' }, mr: 1 }} src="/assets/bee.svg" />
+                </Box>
             </Grid>
             <Grid item xs="auto">
                 <Typography variant="h5" component="a" href="/" sx={{
@@ -202,8 +202,8 @@ function ShoppingCart() {
     return <>
         <React.Fragment>
             <Button size='large' onClick={() => setDrawer(true)}>
-                <ShoppingBasketIcon color='secondary' />
-                <Typography sx={{ transform: "translate(0, -50%)" }} color='secondary'>{getTotalItems()}</Typography>
+                <ShoppingBasketIcon htmlColor='#fafafa'/>
+                <Typography sx={{ transform: "translate(0, -50%)" }} color='#fafafa'>{getTotalItems()}</Typography>
             </Button>
             <Drawer anchor='right' open={isOpen} onClose={() => setDrawer(false)}>
                 <ListCart />
@@ -267,7 +267,7 @@ function SignIn() {
 
                         {settings.map((setting) => (
                             <MenuItem key={setting.name} onClick={setting.action}>
-                                <Typography color="text.secondary" onClick={setting.action} textAlign="center">{setting.name}</Typography>
+                                <Typography color="#FAFAFA" onClick={setting.action} textAlign="center">{setting.name}</Typography>
                             </MenuItem>
                         ))}
                     </Menu>
@@ -275,7 +275,7 @@ function SignIn() {
             </AuthenticatedTemplate>
             <UnauthenticatedTemplate>
                 <Box sx={{ whiteSpace: "nowrap" }}>
-                    <Button onClick={() => instance.loginRedirect(loginRequest)} size='large' sx={{ color: "secondary.main", my: 2, display: 'block' }} >
+                    <Button onClick={() => instance.loginRedirect(loginRequest)} size='large' sx={{ color: "#FAFAFA", my: 2, display: 'block' }} >
                         Logg Inn
                     </Button>
                 </Box>

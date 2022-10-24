@@ -25,7 +25,7 @@ export default function Footer() {
                                 <Typography>Bestill innen 21.00 for levering neste dag</Typography>
                             </Box>
                             <Box>
-                                <Typography variant="caption">Kontakt oss på mail på hei@bunnylane.no</Typography>
+                                <Typography variant="caption">Kontakt oss på mail på hei@adalengard.no</Typography>
                             </Box>
                         </Grid>
                     </Grid>
