@@ -13,6 +13,7 @@ import Blog from './pages/Blog';
 import Index from './pages/Index';
 import Orders from './pages/Orders';
 import Store from './pages/Store';
+import Terms from './pages/Terms';
 
 const Pages = () => {
 
@@ -55,22 +56,23 @@ const Pages = () => {
 
   return (
     <>
-    <Box>
-      <NavBar />
-      <Grid container direction="row-reverse" justifyContent="space-between" alignItems="flex-start">
-        <Grid item xs={2} />
-        <Grid item xs={8} >
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path='/blog' element={<Blog />} />
-            <Route path='/about' element={<About />} />
-            <Route path='/store' element={<Store />} />
-            <Route path='/orders' element={<Orders />} />
-          </Routes>
+      <Box>
+        <NavBar />
+        <Grid container direction="row-reverse" justifyContent="space-between" alignItems="flex-start">
+          <Grid item xs={2} />
+          <Grid item xs={8} display="flex" justifyContent="center">
+            <Routes>
+              <Route path="/" element={<About />} />
+              <Route path='/blog' element={<Blog />} />
+              <Route path='/about' element={<About />} />
+              <Route path='/store' element={<Store />} />
+              <Route path='/orders' element={<Orders />} />
+              <Route path='/terms' element={<Terms />} />
+            </Routes>
+          </Grid>
+          <Grid item xs={2} />
         </Grid>
-        <Grid item xs={2}/>
-      </Grid>
-      <Footer />
+        <Footer />
       </Box>
     </>
   )

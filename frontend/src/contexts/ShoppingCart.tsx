@@ -26,7 +26,7 @@ type ShoppingCartProviderProps = {
 }
 
 export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
-    const [cartItems, setCartItems] = useLocalStorage<CartItem[]>("aadalen-homestead-shopping-cart", [])
+    const [cartItems, setCartItems] = useLocalStorage<CartItem[]>("adalengard-shopping-cart", [])
 
     function getTotalItems() {
         return cartItems.reduce((prev, curr) => curr.quantity + prev, 0)
